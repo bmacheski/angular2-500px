@@ -3,6 +3,7 @@ import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
 @Component({
   selector: 'navbar',
+  directives: [ROUTER_DIRECTIVES],
   styles: [`
     div {
       font-family: Helvetica Neue,sans-serif;
@@ -11,6 +12,8 @@ import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
     a {
       text-transform: uppercase;
       padding: 15px;
+      text-decoration: none;
+      color: #2196F3;
     }
     h1 {
       text-align: center;
@@ -19,12 +22,12 @@ import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
   template: `
     <div>
       <h1>Angular2 500px</h1>
-      <a>most popular</a>
-      <a>highest rated</a>
-      <a>editors picks</a>
-      <a>fresh today</a>
-      <a>fresh yesterday</a>
-      <a>fresh this week</a>
+      <a [routerLink]="['Photos', { category: 'popular' }]">most popular</a>
+      <a [routerLink]="['Photos', { category: 'editors' }]">editors picks</a>
+      <a [routerLink]="['Photos', { category: 'upcoming' }]">upcoming</a>
+      <a [routerLink]="['Photos', { category: 'fresh_today' }]">fresh today</a>
+      <a [routerLink]="['Photos', { category: 'fresh_yesterday' }]">fresh yesterday</a>
+      <a [routerLink]="['Photos', { category: 'fresh_week' }]">fresh this week</a>
     </div>
   `
 })

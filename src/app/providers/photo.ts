@@ -10,9 +10,9 @@ export class Photo {
 
   constructor(public http: Http) {}
 
-  getPhotos(): Observable<any> {
+  getPhotos(category: string): Observable<any> {
    return this.http
-      .get(`${Photo.API_URL}/photos?feature=fresh_today&consumer_key=${Photo.KEY}`)
+      .get(`${Photo.API_URL}/photos?feature=${category}&image_size=4&consumer_key=${Photo.KEY}`)
       .map((res: any) => res.json());
   }
 }

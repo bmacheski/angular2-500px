@@ -6,23 +6,35 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'photo',
   styles: [`
-    li {
-      display: inline-block;
-      list-style: none;
-      width: 20%;
-    }
     img {
-      min-width: 8rem;
-      min-height: 8rem;
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    #container {
       width: 100%;
+      max-width: 1300px;
+      margin: 2em auto;
+    }
+
+    .flexcontainer {
+      -moz-column-count:5;
+      -moz-column-gap: 3%;
+      -moz-column-width: 30%;
+      -webkit-column-count:5;
+      -webkit-column-gap: 3%;
+      -webkit-column-width: 30%;
+      column-count: 5;
+      column-gap: 3%;
+      column-width: 30%;
     }
   `],
   template: `
-    <ul>
-      <li *ngFor="#photo of photos">
+    <div id="container" class="flexcontainer">
+      <div *ngFor="#photo of photos" class="thumb" async>
         <img src="{{photo.images[0].url}}">
-      </li>
-     </ul>
+      </div>
+     </div>
   `
 })
 
@@ -30,7 +42,9 @@ export class Photos {
 
   photos: Observable<Array<String>>;
 
-  constructor(private photo: Photo) {
-     this.photo.getPhotos().subscribe(items => this.photos = items.photos);
+  constructor(private photo: Photo, routeParams: RouteParams) {
+    this.photo
+      .getPhotos(routeParams.get('category'))
+      .subscribe(items => this.photos = items.photos);
   }
 }

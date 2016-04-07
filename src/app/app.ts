@@ -1,6 +1,7 @@
 import { Component } from 'angular2/core';
 import { ROUTER_DIRECTIVES, RouteConfig, Route } from 'angular2/router';
 import { Navbar } from './components/navbar';
+import { Home } from './components/home';
 import { Photos } from './components/photo';
 
 @Component({
@@ -15,7 +16,8 @@ import { Photos } from './components/photo';
 })
 
 @RouteConfig([
-  new Route({ path: '/', component: Photos, name: 'Photos' })
+  new Route({ path: '/', component: Home, name: 'Home' }),
+  new Route({ path: '/photos/:category', component: Photos, name: 'Photos' })
 ])
 
 export class AppComponent {}
