@@ -2,9 +2,11 @@ import { Component } from 'angular2/core';
 import { ROUTER_DIRECTIVES, Router, Location, RouteParams } from 'angular2/router';
 import { Photo } from '../providers/providers';
 import { Observable } from 'rxjs/Observable';
+import { Spinner } from './spinner';
 
 @Component({
   selector: 'photo',
+  directives: [Spinner],
   styles: [`
     img {
       width: 100% !important;
@@ -30,6 +32,9 @@ import { Observable } from 'rxjs/Observable';
     }
   `],
   template: `
+    <div *ngIf="isLoading">
+      <spinner></spinner>
+    </div>
     <div id="container" class="flexcontainer">
       <div *ngFor="#photo of photos" class="thumb" async>
         <img src="{{photo.images[0].url}}">
@@ -41,10 +46,20 @@ import { Observable } from 'rxjs/Observable';
 export class Photos {
 
   photos: Observable<Array<String>>;
+  isLoading: Boolean;
 
-  constructor(private photo: Photo, routeParams: RouteParams) {
-    this.photo
-      .getPhotos(routeParams.get('category'))
-      .subscribe(items => this.photos = items.photos);
+  constructor (private photo: Photo, routeParams: RouteParams) {
+    this.makePhotoRequest(photo, routeParams);
+  }
+
+  makePhotoRequest (photo, route) {
+    this.isLoading = true;
+
+    photo
+      .getPhotos(route.get('category'))
+      .subscribe(items => {
+        this.photos = items.photos;
+        this.isLoading = false;
+      });
   }
 }

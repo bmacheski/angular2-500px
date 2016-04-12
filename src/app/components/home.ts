@@ -17,5 +17,5 @@ import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 })
 
 export class Home {
-  contructor() {}
+  contructor () {}
 }
